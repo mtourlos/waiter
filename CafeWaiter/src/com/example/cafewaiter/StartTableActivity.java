@@ -1,17 +1,17 @@
 package com.example.cafewaiter;
 
-import java.io.IOException;
-import java.io.InputStream;
+//import java.io.IOException;
+//import java.io.InputStream;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
+//import org.apache.http.HttpEntity;
+//import org.apache.http.HttpResponse;
+//import org.apache.http.client.HttpClient;
+//import org.apache.http.client.methods.HttpGet;
+//import org.apache.http.impl.client.DefaultHttpClient;
+//import org.apache.http.protocol.BasicHttpContext;
+//import org.apache.http.protocol.HttpContext;
 
-import android.os.AsyncTask;
+//import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -44,8 +44,10 @@ public class StartTableActivity extends Activity {
 		EditText editText = (EditText) findViewById(R.id.table_no);
 		int tableNo = Integer.parseInt(editText.getText().toString().trim());
 		System.out.println("********"+tableNo);
-		new StartTable().execute(tableNo);
-		new WebServiceTask().execute(tableNo);
+		//new StartTable().execute(tableNo);
+		String response = "N/A";
+		WebServiceTask wst = new WebServiceTask(WebServiceTask.GET_TASK,this,response);
+		wst.execute("http://192.168.1.9:8080/CafeServer/service/orderservice/"+tableNo);
 		
     	Context context = getApplicationContext();
     	CharSequence text = "Proceeding...";
@@ -56,7 +58,7 @@ public class StartTableActivity extends Activity {
 	}
 	
 	
-	public class StartTable extends AsyncTask <Integer, Void, String> {
+/*	public class StartTable extends AsyncTask <Integer, Void, String> {
 		
 		protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
 			InputStream in = entity.getContent();
@@ -104,6 +106,6 @@ public class StartTableActivity extends Activity {
 			b.setClickable(true);
 		}
 		
-	}
+	}*/
 
 }

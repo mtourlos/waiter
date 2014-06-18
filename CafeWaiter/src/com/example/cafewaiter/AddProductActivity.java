@@ -1,11 +1,11 @@
 package com.example.cafewaiter;
 
-import java.io.IOException;
-import java.io.InputStream;
+//import java.io.IOException;
+//import java.io.InputStream;
 
-import org.apache.http.HttpEntity;
+//import org.apache.http.HttpEntity;
 
-import android.os.AsyncTask;
+//import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -42,9 +42,12 @@ public class AddProductActivity extends Activity {
 		int productId = Integer.parseInt(product.getText().toString().trim());
 		System.out.println("********Product:"+productId);
 		
-		StartTableActivity stb = new StartTableActivity();
-		stb.sTable(v);
-		new AddProduct().execute();
+		//StartTableActivity stb = new StartTableActivity();
+		//stb.sTable(v);
+		//new AddProduct().execute();
+		String response="N/A";
+		WebServiceTask wst = new WebServiceTask(WebServiceTask.POST_TASK,this,response);
+		wst.execute("http://localhost:8080/CafeServer/service/orderservice/addProduct");
 		
     	Context context = getApplicationContext();
     	CharSequence text = "Proceeding...";
@@ -54,17 +57,5 @@ public class AddProductActivity extends Activity {
 		
 	}
 	
-	private class AddProduct extends AsyncTask<Integer,Void,Void>{
-		protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
-			InputStream in = entity.getContent();
-			StringBuffer out = new StringBuffer();
-			int n = 1;
-			while (n>0) {
-				byte[] b = new byte[4096];
-				n =  in.read(b);
-				if (n>0) out.append(new String(b, 0, n));
-			}
-			return out.toString();
-		}
-	}
+	
 }
