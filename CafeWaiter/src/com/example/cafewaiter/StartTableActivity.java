@@ -39,16 +39,17 @@ public class StartTableActivity extends Activity {
 	
 	public void sTable (View v){
 		final Button button = (Button) findViewById(R.id.start_table_1);
-		button.setClickable(false);
+		//button.setClickable(false);
 		
 		EditText editText = (EditText) findViewById(R.id.table_no);
 		int tableNo = Integer.parseInt(editText.getText().toString().trim());
-		System.out.println("********"+tableNo);
+		//System.out.println("********"+tableNo);
 		//new StartTable().execute(tableNo);
-		String response = "N/A";
-		WebServiceTask wst = new WebServiceTask(WebServiceTask.GET_TASK,this,response);
-		wst.execute("http://192.168.1.9:8080/CafeServer/service/orderservice/"+tableNo);
-		
+		if (tableNo>0){
+			String response = "N/A";
+			WebServiceTask wst = new WebServiceTask(WebServiceTask.GET_TASK,this,response);
+			wst.execute("http://192.168.2.11:8080/CafeServer/service/orderservice/"+tableNo);
+		}
     	Context context = getApplicationContext();
     	CharSequence text = "Proceeding...";
     	int duration = Toast.LENGTH_SHORT;

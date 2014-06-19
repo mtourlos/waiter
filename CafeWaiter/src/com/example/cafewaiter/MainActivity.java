@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void setAddProductView(View v) {
-		Intent intent= new Intent(this, StartTableActivity.class);
+		Intent intent= new Intent(this, AddProductActivity.class);
 		startActivity(intent);
 		
 	}

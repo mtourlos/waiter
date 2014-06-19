@@ -32,14 +32,14 @@ public class AddProductActivity extends Activity {
 
 	public void aProduct (View v){
 		final Button button = (Button) findViewById(R.id.add_product_button);
-		button.setClickable(false);
+		//button.setClickable(false);
 		
 		EditText table = (EditText) findViewById(R.id.add_product_table);
-		int tableNo = Integer.parseInt(table.getText().toString().trim());
+		String tableNo = table.getText().toString().trim();
 		System.out.println("********TableNo:"+tableNo);
 		
 		EditText product = (EditText) findViewById(R.id.add_product_id);
-		int productId = Integer.parseInt(product.getText().toString().trim());
+		String productId = product.getText().toString().trim();
 		System.out.println("********Product:"+productId);
 		
 		//StartTableActivity stb = new StartTableActivity();
@@ -47,7 +47,9 @@ public class AddProductActivity extends Activity {
 		//new AddProduct().execute();
 		String response="N/A";
 		WebServiceTask wst = new WebServiceTask(WebServiceTask.POST_TASK,this,response);
-		wst.execute("http://localhost:8080/CafeServer/service/orderservice/addProduct");
+		wst.addNameValuePair("tableNo", tableNo);
+		wst.addNameValuePair("productId", productId);
+		wst.execute("http://192.168.2.11:8080/CafeServer/service/orderservice/addProduct");
 		
     	Context context = getApplicationContext();
     	CharSequence text = "Proceeding...";

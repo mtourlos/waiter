@@ -79,6 +79,7 @@ public class WebServiceTask extends AsyncTask<String,Void,String>{
 		}else{
 			try{
 				result = inputStreamToString(response.getEntity().getContent());
+				System.out.println(result);
 			} catch (IllegalStateException e){
 				Log.e(TAG, e.getLocalizedMessage(), e);
 			}catch (IOException e){
@@ -100,7 +101,7 @@ public class WebServiceTask extends AsyncTask<String,Void,String>{
 	}
 	
 	//Connection Establishment
-	private HttpParams getHttpParams(){
+	public HttpParams getHttpParams(){
 		
 		HttpParams http = new BasicHttpParams();
 		
@@ -110,7 +111,7 @@ public class WebServiceTask extends AsyncTask<String,Void,String>{
          return http;
 	}
 	
-	private HttpResponse doResponse(String url) {
+	public HttpResponse doResponse(String url) {
         
         // Use our connection and data timeouts as parameters for our
         // DefaultHttpClient
@@ -124,18 +125,23 @@ public class WebServiceTask extends AsyncTask<String,Void,String>{
             case POST_TASK:
                 HttpPost httppost = new HttpPost(url);
                 // Add parameters
-                StringEntity se = new StringEntity("{ \"tableNo\" :"+params.get(params.size()-1).getValue()+", \"productNo\":"+params.get(params.size()).getValue()+" }");
+                StringEntity se = new StringEntity("{ \"tableNo\" :"+params.get(0).getValue()+", \"productNo\":"+params.get(1).getValue()+" }");
                 se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json"));
-                httppost.setHeader("Accept","application/json");
+                //httppost.setHeader("Accept","application/json");
                 httppost.setHeader("Content-type","application/json");
                 httppost.setEntity(se);
+                System.out.println("tableNo:"+params.get(0).getValue());
+                System.out.println("productId:"+params.get(1).getValue());
+                
                 //httppost.setEntity(new UrlEncodedFormEntity(params));
 
                 response = httpclient.execute(httppost);
+                //System.out.println("****"+response);
                 break;
             case GET_TASK:
                 HttpGet httpget = new HttpGet(url);
                 response = httpclient.execute(httpget);
+                //System.out.println("****"+response);
                 break;
             }
         } catch (Exception e) {
@@ -147,7 +153,7 @@ public class WebServiceTask extends AsyncTask<String,Void,String>{
         return response;
     }
      
-    private String inputStreamToString(InputStream is) {
+    public String inputStreamToString(InputStream is) {
 
         String line = "";
         StringBuilder total = new StringBuilder();
